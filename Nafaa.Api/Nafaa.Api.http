@@ -1,0 +1,6 @@
+@Nafaa.Api_HostAddress = http://localhost:5218
+
+GET {{Nafaa.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

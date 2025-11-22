@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Nafaa.Api/Nafaa.Api.csproj" />
+  <Project Path="Nafaa.Application/Nafaa.Application.csproj" />
+  <Project Path="Nafaa.Domain/Nafaa.Domain.csproj" />
+  <Project Path="Nafaa.Infrastructure/Nafaa.Infrastructure.csproj" />
+</Solution>
