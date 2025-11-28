@@ -23,5 +23,5 @@ public class Request
     public Guid RecipientId { get; set; }
     public Recipient Recipient { get; set; } = null!;
 
-    public ICollection<Staff> ReviewerStaff { get; set; } = new List<Staff>();
+    public ICollection<CharityStaff> ReviewerStaff { get; set; } = new List<CharityStaff>();
 }

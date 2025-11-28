@@ -4,10 +4,9 @@ public class Charity
 {
     public Guid CharityId { get; set; }
 
-    public Uuid RegistrationNumber { get; set; } = null!;
+    public Guid RegistrationNumber { get; set; }
     public string CharityName { get; set; } = null!;
     public string Address { get; set; } = null!; 
-
     public string Description { get; set; } = null!;
     public string Aim { get; set; } = null!;
     public string Vision { get; set; } = null!;
@@ -21,7 +20,7 @@ public class Charity
     public int NumberOfCampaigns { get; set; }
     public double EndorsementScore { get; set; }
 
-    public ICollection<Staff> StaffMembers { get; set; } = new List<Staff>();
+    public ICollection<CharityStaff> StaffMembers { get; set; } = new List<CharityStaff>();
     public ICollection<Recipient> Recipients { get; set; } = new List<Recipient>();
     public ICollection<Project> Projects { get; set; } = new List<Project>();
     public ICollection<Donation> Donations { get; set; } = new List<Donation>();

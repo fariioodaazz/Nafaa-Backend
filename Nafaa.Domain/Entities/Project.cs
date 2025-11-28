@@ -7,7 +7,7 @@ public class Project
 
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
-    public ICollection<ProjectCategory> Category { get; set; } = null!;
+    public ProjectCategory Category { get; set; } = ProjectCategory.None;
     public decimal Balance { get; set; }
     public decimal TargetAmount { get; set; }
 
@@ -21,8 +21,9 @@ public class Project
     public Guid CharityId { get; set; }
     public Charity Charity { get; set; } = null!;
 
-    public Guid? RecipientId { get; set; }
-    public Recipient? Recipient { get; set; }
+    public ICollection<Recipient> Recipients { get; set; } = new List<Recipient>();
+    public ICollection<CharityStaff> StaffMembers { get; set; } = new List<CharityStaff>();
+
 
     public ICollection<Donation> Donations { get; set; } = new List<Donation>();
 }

@@ -9,6 +9,6 @@ public class Partner
     public string Name { get; set; } = null!;
     public string Address { get; set; } = null!;
     public decimal Balance { get; set; }
-    public ICollection<PartnerType> PartnerTypes { get; set; } = new List<PartnerType>();
+    public PartnerType PartnerType { get; set; } = PartnerType.Other;
 
 }

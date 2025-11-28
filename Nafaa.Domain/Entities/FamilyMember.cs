@@ -13,8 +13,6 @@ public class FamilyMember
     public FamilyMemberPermissions Permissions { get; set; } = FamilyMemberPermissions.Allowed;
     public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.Single;
     public EducationLevel EducationLevel { get; set; } = EducationLevel.Illiterate;
-    public MedicalHistory? MedicalHistory { get; set; }
-
     public Guid RecipientId { get; set; }
     public Recipient Recipient { get; set; } = null!;
 }

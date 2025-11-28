@@ -1,0 +1,16 @@
+D:\Nafaa's Backend\Nafaa.Application\bin\Debug\net10.0\Nafaa.Application.deps.json
+D:\Nafaa's Backend\Nafaa.Application\bin\Debug\net10.0\Nafaa.Application.dll
+D:\Nafaa's Backend\Nafaa.Application\bin\Debug\net10.0\Nafaa.Application.pdb
+D:\Nafaa's Backend\Nafaa.Application\bin\Debug\net10.0\Nafaa.Domain.dll
+D:\Nafaa's Backend\Nafaa.Application\bin\Debug\net10.0\Nafaa.Domain.pdb
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Application.csproj.AssemblyReference.cache
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Application.AssemblyInfoInputs.cache
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Application.AssemblyInfo.cs
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Application.csproj.CoreCompileInputs.cache
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Application.sourcelink.json
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Ap.52C575AC.Up2Date
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Application.dll
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\refint\Nafaa.Application.dll
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\Nafaa.Application.pdb
+D:\Nafaa's Backend\Nafaa.Application\obj\Debug\net10.0\ref\Nafaa.Application.dll

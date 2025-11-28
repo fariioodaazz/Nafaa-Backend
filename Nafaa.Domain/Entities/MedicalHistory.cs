@@ -9,7 +9,7 @@ public class MedicalHistory
 
     public Disability? Disability { get; set; }
     public ChronicCondition? ChronicCondition { get; set; }
-    public ICollection<string>? Medications { get; set; } = new List<string>();
+    public List<string> Medications { get; set; } = new List<string>();
     public MobilityStatus? MobilityStatus { get; set; }
     public bool RequiresMedicalCare { get; set; }
     public string? Notes { get; set; }

@@ -8,7 +8,7 @@ public class VirtualCard
     public string CardHolderName { get; set; } = null!;
     public string? Cvv { get; set; }
     public DateTime ExpirationDate { get; set; }
-    public int Pin { get; set; } = null!;
+    public int Pin { get; set; }
     public CardStatus CardStatus { get; set; }
     public int TotalPointsEarned { get; set; }
 

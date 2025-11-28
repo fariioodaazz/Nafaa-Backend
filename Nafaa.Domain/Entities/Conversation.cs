@@ -5,7 +5,7 @@ public class Conversation
     public Guid ConversationId { get; set; }
     public bool IsActive { get; set; } = true;
     public Guid BotId { get; set; }
-    public Bot Bot { get; set; } = null!;
+    public Chatbot Bot { get; set; } = null!;
     public DateTime LastMessageAt { get; set; } = DateTime.UtcNow;
     public DateTime StartedAt { get; set; } = DateTime.UtcNow;
 

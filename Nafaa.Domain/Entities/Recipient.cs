@@ -22,7 +22,6 @@ public class Recipient
     public EmploymentStatus EmploymentStatus { get; set; } = EmploymentStatus.Unemployed;
     public decimal MonthlyIncome { get; set; }
     public decimal MonthlyAssistance { get; set; }
-    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
     // 1 Recipient -> 1 VirtualCard
     public VirtualCard VirtualCard { get; set; } = null!;
@@ -38,5 +37,8 @@ public class Recipient
 
     // 1 Recipient -> many Requests
     public ICollection<Request> Requests { get; set; } = new List<Request>();
+
+    // 1 Recipient -> many Projects
+    public ICollection<Project> Projects { get; set; } = new List<Project>();
 }
 
