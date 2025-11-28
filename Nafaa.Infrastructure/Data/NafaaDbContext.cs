@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Nafaa.Infrastructure.Models;
+using System;
 using Nafaa.Domain.Entities;
 
 namespace Nafaa.Infrastructure.Data;
 
-public class NafaaDbContext : DbContext
+public class NafaaDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
     public NafaaDbContext(DbContextOptions<NafaaDbContext> options)
         : base(options)
