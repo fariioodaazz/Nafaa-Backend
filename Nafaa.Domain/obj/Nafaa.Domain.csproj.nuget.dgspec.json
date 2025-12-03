@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Marie\\source\\repos\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {}
+    "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Marie\\source\\repos\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {
+    "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Marie\\source\\repos\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj",
+        "projectUniqueName": "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj",
         "projectName": "Nafaa.Domain",
-        "projectPath": "C:\\Users\\Marie\\source\\repos\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj",
-        "packagesPath": "C:\\Users\\Marie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Marie\\source\\repos\\Nafaa-Backend\\Nafaa.Domain\\obj\\",
+        "projectPath": "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj",
+        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
+        "outputPath": "D:\\Nafaa's Backend\\Nafaa.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Marie\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
