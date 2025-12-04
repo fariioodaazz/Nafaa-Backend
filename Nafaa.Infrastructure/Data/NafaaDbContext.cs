@@ -45,6 +45,7 @@ public class NafaaDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Gu
     public DbSet<MedicalHistory> MedicalHistories => Set<MedicalHistory>();
     public DbSet<FamilyMember> FamilyMembers => Set<FamilyMember>();
     public DbSet<Housing> Housings => Set<Housing>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -296,5 +297,15 @@ public class NafaaDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Gu
             .HasOne(m => m.Conversation)
             .WithMany(c => c.Messages)
             .HasForeignKey(m => m.ConversationId);
+
+        // ---------- Refresh Tokens ----------
+        modelBuilder.Entity<RefreshToken>()
+            .HasKey(rt => rt.RefreshTokenId);
+
+        modelBuilder.Entity<RefreshToken>()
+            .HasOne(rt => rt.User)
+            .WithMany(u => u.RefreshTokens)
+            .HasForeignKey(rt => rt.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

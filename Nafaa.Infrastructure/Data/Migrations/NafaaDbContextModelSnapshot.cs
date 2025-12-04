@@ -746,6 +746,44 @@ namespace Nafaa.Infrastructure.Migrations
                     b.ToTable("Recipients");
                 });
 
+            modelBuilder.Entity("Nafaa.Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("RefreshTokenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RevokedByIp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RefreshTokenId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Nafaa.Domain.Entities.Request", b =>
                 {
                     b.Property<Guid>("RequestId")
@@ -1426,6 +1464,17 @@ namespace Nafaa.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Nafaa.Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("Nafaa.Domain.Entities.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Nafaa.Domain.Entities.Request", b =>
                 {
                     b.HasOne("Nafaa.Domain.Entities.Recipient", "Recipient")
@@ -1629,6 +1678,8 @@ namespace Nafaa.Infrastructure.Migrations
                     b.Navigation("PartnerStaff");
 
                     b.Navigation("Recipient");
+
+                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("Nafaa.Domain.Entities.VirtualCard", b =>

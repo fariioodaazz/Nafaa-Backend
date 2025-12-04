@@ -11,6 +11,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using Nafaa.Api.Services.Auth;
+
+
 
 namespace Nafaa.Api.Controllers;
 
@@ -22,20 +25,26 @@ public class AuthController : ControllerBase
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly NafaaDbContext _dbContext;
     private readonly IJwtTokenService _jwtTokenService;
-    private readonly IEmailService _emailService; // Added this field
+    private readonly IEmailService _emailService; 
+    private readonly IPasswordResetService _passwordResetService;
+    private readonly IRefreshTokenService _refreshTokenService;
 
     public AuthController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         NafaaDbContext dbContext,
         IJwtTokenService jwtTokenService,
-        IEmailService emailService) // Added this parameter
+        IEmailService emailService,
+        IPasswordResetService passwordResetService,
+        IRefreshTokenService refreshTokenService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _dbContext = dbContext;
         _jwtTokenService = jwtTokenService;
-        _emailService = emailService; // Added this assignment
+        _emailService = emailService;
+        _passwordResetService = passwordResetService;
+        _refreshTokenService = refreshTokenService;
     }
 
     // =========================
@@ -202,10 +211,16 @@ public class AuthController : ControllerBase
         // 5. Issue JWT
         var tokenResult = _jwtTokenService.GenerateToken(user, user.Donor);
 
+        // 6. Create refresh token
+        var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+        var refreshToken = await _refreshTokenService.CreateRefreshTokenAsync(user, ipAddress);
+
         var response = new AuthResponse
         {
             Token = tokenResult.Token,
             ExpiresAt = tokenResult.ExpiresAt,
+            RefreshToken = refreshToken.Token,
+            RefreshTokenExpiresAt = refreshToken.ExpiresAt,
             UserId = user.UserId,
             DonorId = user.Donor.DonorId,
             Role = user.Role.ToString(),
@@ -267,6 +282,10 @@ public class AuthController : ControllerBase
         return Ok(response);
     }
 
+    // =========================
+    // 3) EMAIL CONFIRMATION
+    // =========================
+
     [HttpGet("confirm-email")]
     public async Task<IActionResult> ConfirmEmail([FromQuery] Guid userId, [FromQuery] string token)
     {
@@ -286,6 +305,10 @@ public class AuthController : ControllerBase
 
         return BadRequest($"Invalid token: {result.Errors.FirstOrDefault()?.Description}");
     }
+
+    // =========================
+    // 4) TEST SMTP CONNECTION
+    // =========================
 
     [HttpGet("test-smtp-connection")]
     [AllowAnonymous]
@@ -318,4 +341,127 @@ public class AuthController : ControllerBase
             });
         }
     }
-} // Added missing closing brace
+
+    // =========================
+    // 5) FORGOT PASSWORD
+    // =========================
+
+    [HttpPost("forgot-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var debugLink = await _passwordResetService.SendResetPasswordAsync(request.Email);
+
+        return Ok(new
+        {
+            message = "If this email exists, a reset link has been sent.",
+            // DEV ONLY: handy for testing without frontend
+            debugResetLink = debugLink
+        });
+    }
+
+    // =========================
+    // 6) RESET PASSWORD
+    // =========================
+    [HttpPost("reset-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var (success, errors) = await _passwordResetService.ResetPasswordAsync(
+            request.Email,
+            request.Token,
+            request.NewPassword);
+
+        if (!success)
+        {
+            return BadRequest(new
+            {
+                message = "Could not reset password.",
+                errors
+            });
+        }
+
+        return Ok(new { message = "Password reset successfully." });
+    }
+
+    // =========================
+    // 7) REFRESH TOKEN
+    // =========================
+    [HttpPost("refresh")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var (success, user, refreshToken, error) =
+            await _refreshTokenService.ValidateAsync(request.RefreshToken);
+
+        if (!success || user == null || refreshToken == null)
+        {
+            return Unauthorized(new { message = error ?? "Invalid refresh token." });
+        }
+
+        // Load related donor/roles
+        var fullUser = await _dbContext.Users
+            .Include(u => u.Donor)
+            .Include(u => u.Recipient)
+            .Include(u => u.CharityStaff)
+            .Include(u => u.PartnerStaff)
+            .FirstOrDefaultAsync(u => u.UserId == user.UserId);
+
+        if (fullUser == null)
+            return Unauthorized(new { message = "User no longer exists." });
+
+        var tokenResult = _jwtTokenService.GenerateToken(fullUser, fullUser.Donor);
+
+        var response = new AuthResponse
+        {
+            Token = tokenResult.Token,
+            ExpiresAt = tokenResult.ExpiresAt,
+            RefreshToken = refreshToken.Token,           
+            RefreshTokenExpiresAt = refreshToken.ExpiresAt,
+            UserId = fullUser.UserId,
+            DonorId = fullUser.Donor?.DonorId,
+            Role = fullUser.Role.ToString(),
+            Email = fullUser.UserName
+        };
+
+        return Ok(response);
+    }
+
+    // =========================
+    // 8) LOGOUT (REVOKE REFRESH TOKEN)
+    // =========================
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
+        {
+            return Unauthorized(new { message = "Invalid token." });
+        }
+
+        var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+
+        if (request.AllDevices)
+        {
+            await _refreshTokenService.RevokeAllForUserAsync(userId, ip);
+        }
+        else if (!string.IsNullOrWhiteSpace(request.RefreshToken))
+        {
+            await _refreshTokenService.RevokeAsync(request.RefreshToken, ip);
+        }
+
+        await _signInManager.SignOutAsync();
+
+        return Ok(new { message = "Logged out successfully." });
+    }  
+}

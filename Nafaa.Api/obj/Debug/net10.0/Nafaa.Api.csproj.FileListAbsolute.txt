@@ -868,3 +868,6 @@ C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Api\obj\Debug\net10.0\refint
 C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Api\obj\Debug\net10.0\Nafaa.Api.pdb
 C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Api\obj\Debug\net10.0\Nafaa.Api.genruntimeconfig.cache
 C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Api\obj\Debug\net10.0\ref\Nafaa.Api.dll
+D:\Nafaa's Backend\Nafaa.Api\bin\Debug\net10.0\BouncyCastle.Cryptography.dll
+D:\Nafaa's Backend\Nafaa.Api\bin\Debug\net10.0\MailKit.dll
+D:\Nafaa's Backend\Nafaa.Api\bin\Debug\net10.0\MimeKit.dll

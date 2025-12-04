@@ -9,6 +9,7 @@ using Nafaa.Api.Models.Email;
 using Nafaa.Api.Services;
 using Nafaa.Api.Services.Email;
 using System.Text.Json.Serialization;
+using Nafaa.Api.Services.Auth;
 
 
 
@@ -41,6 +42,8 @@ else
     builder.Services.AddScoped<IEmailService, ConsoleEmailService>();
     Console.WriteLine($"Unknown email provider '{emailProvider}', defaulting to ConsoleEmailService");
 }
+
+builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
 
 // ASP.NET Identity Configuration
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
@@ -101,6 +104,7 @@ builder.Services
         options.JsonSerializerOptions.Converters.Add(
             new JsonStringEnumConverter());
     });
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
 var app = builder.Build();
 

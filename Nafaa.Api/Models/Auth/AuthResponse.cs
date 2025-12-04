@@ -5,6 +5,9 @@ public class AuthResponse
     public string Token { get; set; } = null!;
     public DateTime ExpiresAt { get; set; }
 
+    public DateTime RefreshTokenExpiresAt { get; set; }
+    public string RefreshToken { get; set; } = null!;
+    
     public Guid UserId { get; set; }
     public Guid? DonorId { get; set; }
     public string Role { get; set; } = null!;

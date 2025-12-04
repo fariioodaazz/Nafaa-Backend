@@ -32,4 +32,6 @@ public class User
 
     public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     public ICollection<Conversation> Conversations { get; set; } = new List<Conversation>();
+    public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+
 }
