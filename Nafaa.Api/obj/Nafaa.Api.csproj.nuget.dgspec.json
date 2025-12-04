@@ -1,36 +1,42 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Nafaa's Backend\\Nafaa.Api\\Nafaa.Api.csproj": {}
+    "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Api\\Nafaa.Api.csproj": {}
   },
   "projects": {
-    "D:\\Nafaa's Backend\\Nafaa.Api\\Nafaa.Api.csproj": {
+    "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Api\\Nafaa.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Nafaa's Backend\\Nafaa.Api\\Nafaa.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Api\\Nafaa.Api.csproj",
         "projectName": "Nafaa.Api",
-        "projectPath": "D:\\Nafaa's Backend\\Nafaa.Api\\Nafaa.Api.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Nafaa's Backend\\Nafaa.Api\\obj\\",
+        "projectPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Api\\Nafaa.Api.csproj",
+        "packagesPath": "C:\\Users\\Marie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Api\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Marie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\Nafaa's Backend\\Nafaa.Application\\Nafaa.Application.csproj": {
-                "projectPath": "D:\\Nafaa's Backend\\Nafaa.Application\\Nafaa.Application.csproj"
+              "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Application\\Nafaa.Application.csproj": {
+                "projectPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Application\\Nafaa.Application.csproj"
               },
-              "D:\\Nafaa's Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj": {
-                "projectPath": "D:\\Nafaa's Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj"
+              "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj"
               }
             }
           }
@@ -51,6 +57,10 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.14.1, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[10.0.0, )"
@@ -527,30 +537,36 @@
         }
       }
     },
-    "D:\\Nafaa's Backend\\Nafaa.Application\\Nafaa.Application.csproj": {
+    "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Application\\Nafaa.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Nafaa's Backend\\Nafaa.Application\\Nafaa.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Application\\Nafaa.Application.csproj",
         "projectName": "Nafaa.Application",
-        "projectPath": "D:\\Nafaa's Backend\\Nafaa.Application\\Nafaa.Application.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Nafaa's Backend\\Nafaa.Application\\obj\\",
+        "projectPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Application\\Nafaa.Application.csproj",
+        "packagesPath": "C:\\Users\\Marie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Marie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {
-                "projectPath": "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj"
+              "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {
+                "projectPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj"
               }
             }
           }
@@ -864,22 +880,28 @@
         }
       }
     },
-    "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {
+    "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj",
         "projectName": "Nafaa.Domain",
-        "projectPath": "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Nafaa's Backend\\Nafaa.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj",
+        "packagesPath": "C:\\Users\\Marie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Marie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -1197,30 +1219,36 @@
         }
       }
     },
-    "D:\\Nafaa's Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj": {
+    "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Nafaa's Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj",
         "projectName": "Nafaa.Infrastructure",
-        "projectPath": "D:\\Nafaa's Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Nafaa's Backend\\Nafaa.Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Infrastructure\\Nafaa.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Marie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Marie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {
-                "projectPath": "D:\\Nafaa's Backend\\Nafaa.Domain\\Nafaa.Domain.csproj"
+              "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj": {
+                "projectPath": "C:\\Users\\Marie\\OneDrive\\Desktop\\Nafaa-Backend\\Nafaa.Domain\\Nafaa.Domain.csproj"
               }
             }
           }

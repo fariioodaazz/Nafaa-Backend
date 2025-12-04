@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Nafaa.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e13e3ebf0bc4f7488d4f67fc416d2541dec56ed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7eb7dc8c92c09d315e39dce2544f45d175b97bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("Nafaa.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Nafaa.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

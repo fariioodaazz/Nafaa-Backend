@@ -10,6 +10,7 @@ using Nafaa.Infrastructure.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 
 namespace Nafaa.Api.Controllers;
 
@@ -21,21 +22,24 @@ public class AuthController : ControllerBase
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly NafaaDbContext _dbContext;
     private readonly IJwtTokenService _jwtTokenService;
+    private readonly IEmailService _emailService; // Added this field
 
     public AuthController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         NafaaDbContext dbContext,
-        IJwtTokenService jwtTokenService)
+        IJwtTokenService jwtTokenService,
+        IEmailService emailService) // Added this parameter
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _dbContext = dbContext;
         _jwtTokenService = jwtTokenService;
+        _emailService = emailService; // Added this assignment
     }
 
     // =========================
-    // 1) REGISTER DONOR
+    // 1) REGISTER DONOR (WITH EMAIL CONFIRMATION)
     // =========================
     [HttpPost("donor/register")]
     public async Task<IActionResult> RegisterDonor([FromBody] DonorRegisterRequest request)
@@ -43,6 +47,7 @@ public class AuthController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+        // 1. Create Identity user (security account)
         var identityUser = new ApplicationUser
         {
             Id = Guid.NewGuid(),
@@ -52,47 +57,102 @@ public class AuthController : ControllerBase
             EmailConfirmed = false
         };
 
-        var result = await _userManager.CreateAsync(identityUser, request.Password);
+        // 2. Create security account with password
+        var createResult = await _userManager.CreateAsync(identityUser, request.Password);
 
-        if (!result.Succeeded)
+        if (!createResult.Succeeded)
         {
             return BadRequest(new
             {
-                errors = result.Errors.Select(e => e.Description)
+                errors = createResult.Errors.Select(e => e.Description)
             });
         }
 
+        // 3. Create domain user (business account)
         var user = new User
         {
             UserId = identityUser.Id,
-            UserName = request.Email,      
+            UserName = request.Email,
             Role = UserRole.Donor,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            DateOfBirth = DateTime.UtcNow,
+            DateOfBirth = request.DateOfBirth ?? DateTime.UtcNow.AddYears(-18), // Added null check
             PhoneNumber = request.PhoneNumber,
             DateCreated = DateTime.UtcNow,
             IsEmailVerified = false,
             Password = "HASHED_BY_IDENTITY"
         };
 
+        // 4. Create donor profile
         var donor = new Donor
         {
             DonorId = Guid.NewGuid(),
             UserId = user.UserId,
-            User = user
+            User = user,
         };
 
-        await _dbContext.Users.AddAsync(user);
-        await _dbContext.Donors.AddAsync(donor);
-        await _dbContext.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetCurrentUser), new { }, new
+        try
         {
-            message = "Donor registered successfully. Please verify your email.",
-            userId = user.UserId,
-            donorId = donor.DonorId
-        });
+            // Save to database
+            await _dbContext.Users.AddAsync(user);
+            await _dbContext.Donors.AddAsync(donor);
+            await _dbContext.SaveChangesAsync();
+
+            // 5. Generate email confirmation token
+            var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
+
+            // URL encode the token for safe transmission in URL
+            var encodedToken = WebUtility.UrlEncode(emailToken);
+
+            // 6. Generate confirmation link
+            var confirmationLink = $"http://localhost:5218/api/auth/confirm-email?userId={identityUser.Id}&token={encodedToken}";
+
+            // 7. Send confirmation email
+            await _emailService.SendEmailConfirmationAsync(
+                request.Email,
+                request.FirstName,
+                confirmationLink);
+
+            return Ok(new
+            {
+                success = true,
+                message = "Donor registered successfully. Please check your email to verify your account.",
+                userId = user.UserId,
+                donorId = donor.DonorId,
+                email = request.Email,
+                confirmationLink = confirmationLink,
+            });
+        }
+        catch (DbUpdateException ex)
+        {
+            // Rollback: Delete the identity user if domain user creation fails
+            await _userManager.DeleteAsync(identityUser);
+
+            // Log the error
+            Console.WriteLine($"Database error during donor registration: {ex.Message}");
+
+            return StatusCode(500, new
+            {
+                message = "An error occurred during registration. Please try again.",
+                details = ex.InnerException?.Message
+            });
+        }
+        catch (Exception ex)
+        {
+            // Clean up on any other error
+            if (await _userManager.FindByIdAsync(identityUser.Id.ToString()) != null)
+            {
+                await _userManager.DeleteAsync(identityUser);
+            }
+
+            // Log the error
+            Console.WriteLine($"Error during donor registration: {ex.Message}");
+
+            return StatusCode(500, new
+            {
+                message = "An unexpected error occurred. Please try again."
+            });
+        }
     }
 
     // =========================
@@ -207,4 +267,55 @@ public class AuthController : ControllerBase
         return Ok(response);
     }
 
-}
+    [HttpGet("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail([FromQuery] Guid userId, [FromQuery] string token)
+    {
+        Console.WriteLine($"=== EMAIL CONFIRMATION ===");
+        Console.WriteLine($"Token: {token?.Substring(0, 50)}...");
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user == null) return BadRequest("Invalid user");
+
+        if (user.EmailConfirmed) return Ok("Already confirmed");
+
+        var result = await _userManager.ConfirmEmailAsync(user, token);
+
+        if (result.Succeeded)
+        {
+            return Ok("Email confirmed!");
+        }
+
+        return BadRequest($"Invalid token: {result.Errors.FirstOrDefault()?.Description}");
+    }
+
+    [HttpGet("test-smtp-connection")]
+    [AllowAnonymous]
+    public async Task<IActionResult> TestSmtpConnection()
+    {
+        try
+        {
+            using var client = new System.Net.Mail.SmtpClient("sandbox.smtp.mailtrap.io", 587);
+            client.Credentials = new NetworkCredential("e849a4602de752", "3ba8ed64202de7");
+            client.EnableSsl = false;
+            client.Timeout = 5000;
+
+            // Test connection
+            await client.SendMailAsync(
+                "test@nafaa.com",
+                "test@example.com",
+                "Test",
+                "Test body");
+
+            return Ok(new { success = true, message = "SMTP connection successful" });
+        }
+        catch (Exception ex)
+        {
+            return Ok(new
+            {
+                success = false,
+                message = "SMTP connection failed",
+                error = ex.Message,
+                details = "Check firewall, credentials, or try different port"
+            });
+        }
+    }
+} // Added missing closing brace

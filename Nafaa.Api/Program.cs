@@ -5,7 +5,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Nafaa.Infrastructure.Data;
 using Nafaa.Infrastructure.Models;
+using Nafaa.Api.Models.Email;
 using Nafaa.Api.Services;
+using Nafaa.Api.Services.Email;
 using System.Text.Json.Serialization;
 
 
@@ -17,6 +19,28 @@ var builder = WebApplication.CreateBuilder(args);
 // Database Configuration
 builder.Services.AddDbContext<NafaaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Email Settings Configuration
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
+
+var emailProvider = builder.Configuration["EmailSettings:Provider"] ?? "Console";
+
+if (emailProvider == "Console")
+{
+    builder.Services.AddScoped<IEmailService, ConsoleEmailService>();
+    Console.WriteLine("Using ConsoleEmailService for email (logs to console)");
+}
+else if (emailProvider == "Smtp")
+{
+    builder.Services.AddScoped<IEmailService, SmtpEmailService>();
+    Console.WriteLine("Using SmtpEmailService (configured for SMTP)");
+}
+else
+{
+    builder.Services.AddScoped<IEmailService, ConsoleEmailService>();
+    Console.WriteLine($"Unknown email provider '{emailProvider}', defaulting to ConsoleEmailService");
+}
 
 // ASP.NET Identity Configuration
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Nafaa.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+483f297bddb4bec8fb82a92bd3c4c8fcb61c1284")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7eb7dc8c92c09d315e39dce2544f45d175b97bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("Nafaa.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Nafaa.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

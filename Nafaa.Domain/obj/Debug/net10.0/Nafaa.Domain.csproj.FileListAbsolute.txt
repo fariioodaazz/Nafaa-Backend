@@ -22,3 +22,15 @@ D:\Nafaa's Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.dll
 D:\Nafaa's Backend\Nafaa.Domain\obj\Debug\net10.0\refint\Nafaa.Domain.dll
 D:\Nafaa's Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.pdb
 D:\Nafaa's Backend\Nafaa.Domain\obj\Debug\net10.0\ref\Nafaa.Domain.dll
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\bin\Debug\net10.0\Nafaa.Domain.deps.json
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\bin\Debug\net10.0\Nafaa.Domain.dll
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\bin\Debug\net10.0\Nafaa.Domain.pdb
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.AssemblyInfoInputs.cache
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.AssemblyInfo.cs
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.sourcelink.json
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.dll
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\refint\Nafaa.Domain.dll
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\Nafaa.Domain.pdb
+C:\Users\Marie\OneDrive\Desktop\Nafaa-Backend\Nafaa.Domain\obj\Debug\net10.0\ref\Nafaa.Domain.dll
