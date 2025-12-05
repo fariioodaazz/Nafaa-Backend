@@ -10,6 +10,7 @@ using Nafaa.Api.Services;
 using Nafaa.Api.Services.Email;
 using System.Text.Json.Serialization;
 using Nafaa.Api.Services.Auth;
+using Microsoft.OpenApi.Models;
 
 
 
@@ -96,7 +97,33 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 // Other services
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter Bearer {token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 builder.Services
     .AddControllers()
     .AddJsonOptions(options =>
@@ -104,6 +131,7 @@ builder.Services
         options.JsonSerializerOptions.Converters.Add(
             new JsonStringEnumConverter());
     });
+
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
 var app = builder.Build();
