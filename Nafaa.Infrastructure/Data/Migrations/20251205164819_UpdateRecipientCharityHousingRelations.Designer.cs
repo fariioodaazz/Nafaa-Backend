@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nafaa.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Nafaa.Infrastructure.Data;
 namespace Nafaa.Infrastructure.Migrations
 {
     [DbContext(typeof(NafaaDbContext))]
-    partial class NafaaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251205164819_UpdateRecipientCharityHousingRelations")]
+    partial class UpdateRecipientCharityHousingRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

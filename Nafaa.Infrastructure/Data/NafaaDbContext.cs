@@ -102,20 +102,39 @@ public class NafaaDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Gu
             .HasForeignKey(c => c.UserId);
 
         // ---------- Recipient relationships ----------
+        // Recipient <-> Charity many-to-many
         modelBuilder.Entity<Recipient>()
-            .HasOne(r => r.Charity)
+            .HasMany(r => r.Charities)
             .WithMany(c => c.Recipients)
-            .HasForeignKey(r => r.CharityId);
+            .UsingEntity<Dictionary<string, object>>(
+                "CharityRecipient",
+                j => j
+                    .HasOne<Charity>()
+                    .WithMany()
+                    .HasForeignKey("CharityId")
+                    .OnDelete(DeleteBehavior.NoAction),
+                j => j
+                    .HasOne<Recipient>()
+                    .WithMany()
+                    .HasForeignKey("RecipientId")
+                    .OnDelete(DeleteBehavior.NoAction),
+                j =>
+                {
+                    j.HasKey("CharityId", "RecipientId");
+                });
 
         modelBuilder.Entity<Recipient>()
             .HasOne(r => r.VirtualCard)
             .WithOne(vc => vc.Recipient)
             .HasForeignKey<VirtualCard>(vc => vc.RecipientId);
 
+        // Recipient 1 -> many Housings
         modelBuilder.Entity<Recipient>()
-            .HasOne(r => r.Housing)
+            .HasMany(r => r.Housings)
             .WithOne(h => h.Recipient)
-            .HasForeignKey<Housing>(h => h.RecipientId);
+            .HasForeignKey(h => h.RecipientId)
+            .OnDelete(DeleteBehavior.NoAction); 
+
 
         modelBuilder.Entity<FamilyMember>()
             .HasOne(fm => fm.Recipient)
