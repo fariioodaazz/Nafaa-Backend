@@ -28,6 +28,7 @@ public class AuthController : ControllerBase
     private readonly IEmailService _emailService; 
     private readonly IPasswordResetService _passwordResetService;
     private readonly IRefreshTokenService _refreshTokenService;
+    private readonly ILogger<AuthController> _logger;
 
     public AuthController(
         UserManager<ApplicationUser> userManager,
@@ -36,7 +37,8 @@ public class AuthController : ControllerBase
         IJwtTokenService jwtTokenService,
         IEmailService emailService,
         IPasswordResetService passwordResetService,
-        IRefreshTokenService refreshTokenService)
+        IRefreshTokenService refreshTokenService,
+        ILogger<AuthController> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -45,6 +47,7 @@ public class AuthController : ControllerBase
         _emailService = emailService;
         _passwordResetService = passwordResetService;
         _refreshTokenService = refreshTokenService;
+        _logger = logger;
     }
 
     // =========================
@@ -293,6 +296,10 @@ public class AuthController : ControllerBase
         Console.WriteLine($"Token: {token?.Substring(0, 50)}...");
         var user = await _userManager.FindByIdAsync(userId.ToString());
         if (user == null) return BadRequest("Invalid user");
+        if (string.IsNullOrEmpty(token))
+        {
+            return BadRequest(new { message = "Token is required." });
+        }
 
         if (user.EmailConfirmed) return Ok("Already confirmed");
 
@@ -463,5 +470,57 @@ public class AuthController : ControllerBase
         await _signInManager.SignOutAsync();
 
         return Ok(new { message = "Logged out successfully." });
-    }  
+    }
+    // =========================
+    // CHANGE PASSWORD
+    // =========================
+    [HttpPost("change-password")]
+    [Authorize] // Only logged-in users
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        try
+        {
+            // Get current user from JWT token
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized(new { message = "User not found." });
+
+            // Verify current password
+            var isCurrentPasswordValid = await _userManager.CheckPasswordAsync(user, request.CurrentPassword);
+            if (!isCurrentPasswordValid)
+            {
+                return BadRequest(new { message = "Current password is incorrect." });
+            }
+
+            // Change the password
+            var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(new
+                {
+                    message = "Failed to change password.",
+                    errors = result.Errors.Select(e => e.Description)
+                });
+            }
+
+            // Update security stamp (invalidates existing tokens)
+            await _userManager.UpdateSecurityStampAsync(user);
+
+            return Ok(new
+            {
+                success = true,
+                message = "Password changed successfully.",
+                timestamp = DateTime.UtcNow
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error changing password");
+            return StatusCode(500, new { message = "Error changing password.", error = ex.Message });
+        }
+    }
 }
